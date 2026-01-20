@@ -1,0 +1,55 @@
+services: 
+
+  php:
+    build: ./docker/php
+    container_name: php_app
+    # Define timezone para sincronizar horario
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./backend:/var/www/backend
+      - ./frontend/dist:/var/www/frontend/dist
+      - ./.env:/var/www/.env:ro
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_app
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./backend:/var/www/backend
+      - ./frontend/dist:/var/www/frontend/dist
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  db:
+    image: mysql:8
+    container_name: mysql_app
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_INITDB_SKIP_TZINFO: 1
+      TZ: America/Sao_Paulo
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports: 
+      - "${DB_PORT_PUBLIC}:3306"
+    volumes:
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+  node:
+    image: node:20
+    container_name: vite_frontend
+    working_dir: /var/www/frontend
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    volumes:
+      - ./frontend:/var/www/frontend
+    command: ["npm", "run", "dev"]
+    ports:
+      - "${VITE_PORT}:5173"
