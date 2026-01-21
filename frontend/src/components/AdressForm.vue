@@ -46,8 +46,8 @@ async function buscar() {
 
   endereco.value.logradouro = data.logradouro;
   endereco.value.bairro = data.bairro;
-  endereco.value.cidade = data.localidade;
-  endereco.value.estado = data.uf;
+  endereco.value.cidade = data.cidade;
+  endereco.value.estado = data.estado;
   endereco.value.cep = data.cep;
 }
 

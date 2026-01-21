@@ -322,8 +322,8 @@ export default {
         // aq q vai preencher os campos com os dados do viacep se passar das validacao
         this.form.logradouro = data.logradouro || ''
         this.form.bairro = data.bairro || ''
-        this.form.cidade = data.localidade || ''
-        this.form.estado = data.uf || ''
+        this.form.cidade = data.cidade || ''
+        this.form.estado = data.estado || ''
 
       } catch (error) {
         console.error('Erro ao buscar CEP:', error)
