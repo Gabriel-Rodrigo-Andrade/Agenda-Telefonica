@@ -493,13 +493,33 @@ export default {
         cpf: contato.cpf || '',
         data_nascimento: contato.data_nascimento || '',
         email: contato.email,
-        telefone_comercial: contato.telefone_comercial || '',
-        telefone_residencial: contato.telefone_residencial || '',
-        telefone_celular: contato.telefone_celular || '',
+        telefone_comercial: this.formatarNumeroTelefone(contato.telefone_comercial),
+        telefone_residencial: this.formatarNumeroTelefone(contato.telefone_residencial),
+        telefone_celular: this.formatarNumeroTelefone(contato.telefone_celular),
         endereco: contato.endereco || 'Sem endereço',
         data: this.formatarData(contato.criado_em),
         avatar: `https://i.pravatar.cc/150?u=${contato.email}`
       }))
+    },
+
+    formatarNumeroTelefone(numero) {
+      if (!numero) return ''
+      
+      // Remove qualquer formatacao existente pra garantir formatar certo
+      const apenasNumeros = numero.replace(/\D/g, '')
+      
+      if (apenasNumeros.length === 0) return ''
+      
+      // Formata baseado no tamanho
+      if (apenasNumeros.length === 11) {
+        // Celular e comercial: (XX) XXXXX-XXXX
+        return `(${apenasNumeros.substring(0, 2)}) ${apenasNumeros.substring(2, 7)}-${apenasNumeros.substring(7)}`
+      } else if (apenasNumeros.length === 10) {
+        // Fixo: (XX) XXXX-XXXX
+        return `(${apenasNumeros.substring(0, 2)}) ${apenasNumeros.substring(2, 6)}-${apenasNumeros.substring(6)}`
+      }
+      
+      return numero
     },
 
     formatarData(dataString) {
