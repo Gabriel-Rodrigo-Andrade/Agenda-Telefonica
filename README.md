@@ -25,8 +25,8 @@ Sistema completo de agenda telefônica desenvolvido com Vue 3, PHP 8.2 e MySQL, 
 
 **Linux / macOS / Windows (Git Bash/PowerShell):**
 ```bash
-git clone https://github.com/Gabriel-Rodrigo-Andrade/Agenda-Telefonica-testeK13.git
-cd Agenda-Telefonica-testeK13
+git clone https://github.com/Gabriel-Rodrigo-Andrade/Agenda-Telefonica.git
+cd Agenda-Telefonica
 ```
 ## 2. Configuração com .env
 
@@ -161,7 +161,7 @@ Se alguma porta (5173, 8080, 3307) já estiver ocupada, ajuste no arquivo [.env]
 - `DB_PORT_PUBLIC`: porta do MySQL exposta no host. Se 3307 estiver ocupada, mude (ex.: 3308).
 - `DB_HOST`/`DB_PORT`: host e porta interna do MySQL vistos pelo PHP (normalmente não mudam, ficam como `db:3306`).
 - `DB_USER`/`DB_PASS`/`DB_NAME`/`DB_ROOT_PASS`: credenciais e banco criado no container MySQL.
-- `VITE_API_URL`: URL que o frontend usa para chamar a API. Deve refletir `APP_PORT` (ex.: `http://localhost:8081/api` se mudar a porta da API).
+- `VITE_API_URL`: URL que o frontend usa para chamar a API. Deve refletir `APP_PORT` (ex.: `http://localhost:8081/` se mudar a porta da API).
 - `VIACEP_URL`: (geralmente não muda).
 
 Depois de alterar, suba novamente:
@@ -170,6 +170,16 @@ Depois de alterar, suba novamente:
 docker compose down
 docker compose up -d --build
 ```
+
+### Node não executa `npm install` ou `npm run dev`
+- Veja logs rodando só o serviço: `docker compose up node` (sem `-d`).
+- Confirme o comando no compose: `sh -c "npm install && npm run dev -- --host 0.0.0.0"`.
+- Se `node_modules` quebrou, recrie tudo: `docker compose down -v && docker compose up -d --build`.
+
+### Vite não injeta `VITE_API_URL` no build
+- `VITE_API_URL` deve estar no `.env` raiz e passado no compose (`environment` do serviço node).
+- Em [frontend/vite.config.js](frontend/vite.config.js) a chave precisa ser `VITE_API_URL`.
+- Depois de mudar `.env` ou `vite.config.js`, reinicie o node: `docker compose restart node`.
 
 ### Containers não iniciam
 

@@ -346,7 +346,7 @@ export default {
         }
 
         const isEdicao = !!this.enderecoId
-        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/'
         const url = isEdicao
           // se isEdicao for true escolhe ? = (put, se isEdicao for false escolhe : = post
           ? `${baseUrl}/enderecos/${this.enderecoId}`

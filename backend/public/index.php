@@ -45,7 +45,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $method = $_SERVER['REQUEST_METHOD'];
 // parse_url pega so o caminho
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = str_replace('/api', '', $uri);
 $uri = trim($uri, '/');
 
 //regex #^enderecos/contato/(\d+)$# vai juntar url com o id do grupo((\d+))

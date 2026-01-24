@@ -246,7 +246,7 @@ export default {
         this.mensagemSucesso = ''
         this.erros = {}
 
-        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/'
         const url = this.telefoneId 
           ? `${baseUrl}/telefones/${this.telefoneId}`
           : `${baseUrl}/telefones`
