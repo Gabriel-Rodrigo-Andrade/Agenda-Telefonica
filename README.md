@@ -60,6 +60,8 @@ Após os containers subirem, abra seu navegador:
 - **Frontend (Landing Page):** [http://localhost:5173](http://localhost:5173)
 - **Backend API:** [http://localhost:8080](http://localhost:8080)
 
+- **Caso esteja aberto atualize a página para garantir**
+
 ---
 
 ### Gerenciar containers:
