@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
 
 # Configura timezone para America/Sao_Paulo
 RUN echo "America/Sao_Paulo" > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata
+  dpkg-reconfigure -f noninteractive tzdata
 
 # Copia configuração do php.ini com timezone
 RUN echo "date.timezone = America/Sao_Paulo" > /usr/local/etc/php/conf.d/timezone.ini

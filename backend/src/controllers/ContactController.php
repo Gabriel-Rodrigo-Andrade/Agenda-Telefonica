@@ -89,6 +89,7 @@ class ContactController extends BaseController
         if ($erroEmail) $erros['email'] = $erroEmail;
       }
 
+      $dataNascimento = null;
       if (!empty($data['data_nascimento'])) {
         try {
           // E convertido pra object carbon, por isso no final tenho que formatar para string antes de mandar pro db
@@ -210,7 +211,7 @@ class ContactController extends BaseController
         try {
           $dataNascimento = Carbon::createFromFormat('Y-m-d', $data['data_nascimento']);
 
-          // Verifica se a data n e futuro
+          // Verifica se a data e hoje ou no futuro
           if ($dataNascimento->isFuture() || $dataNascimento->isToday()) {
             $erros['data_nascimento'] = 'Data de nascimento não pode ser hoje ou no futuro';
           } else {

@@ -6,10 +6,13 @@ services:
     # Define timezone para sincronizar horario
     environment:
       TZ: America/Sao_Paulo
+      COMPOSER_MEMORY_LIMIT: -1
     volumes:
       - ./backend:/var/www/backend
       - ./frontend/dist:/var/www/frontend/dist
       - ./.env:/var/www/.env:ro
+    working_dir: /var/www/backend
+    command: sh -c "composer install --no-interaction --prefer-dist && php-fpm"
     depends_on:
       - db
 
