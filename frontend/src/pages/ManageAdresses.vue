@@ -346,7 +346,7 @@ export default {
         }
 
         const isEdicao = !!this.enderecoId
-        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/'
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
         const url = isEdicao
           // se isEdicao for true escolhe ? = (put, se isEdicao for false escolhe : = post
           ? `${baseUrl}/enderecos/${this.enderecoId}`
@@ -362,7 +362,12 @@ export default {
           body: JSON.stringify(payload)
         })
         
-        const dados = await response.json()
+        let dados
+        try {
+          dados = await response.json()
+        } catch (e) {
+          throw new Error(`Erro ao processar resposta do servidor`)
+        }
 
         if (!response.ok) {
           if (dados.erros && typeof dados.erros === 'object') {

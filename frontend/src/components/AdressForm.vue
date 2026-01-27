@@ -52,7 +52,7 @@ async function buscar() {
 }
 
 async function salvar() {
-  const res = await api.post("/SalvarEndereco.php", endereco.value);
+  const res = await api.post("/enderecos", endereco.value);
   alert("Endereço salvo com sucesso!");
 }
 </script>

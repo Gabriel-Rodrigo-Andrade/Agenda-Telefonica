@@ -47,6 +47,11 @@ $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = trim($uri, '/');
 
+// Remove o /public/ se existir (quando vem pelo nginx)
+if (strpos($uri, 'public/') === 0) {
+  $uri = substr($uri, 7);
+}
+
 //regex #^enderecos/contato/(\d+)$# vai juntar url com o id do grupo((\d+))
 if ($method === 'GET' && preg_match('#^enderecos/contato/(\d+)$#', $uri, $matches)) {
   /* $matches = url limpa em string 
@@ -56,48 +61,57 @@ if ($method === 'GET' && preg_match('#^enderecos/contato/(\d+)$#', $uri, $matche
   $id = (int)$matches[1];
   $controller = new AdressController($pdo);
   $controller->getEnderecoPorContato($id);
+  exit;
 }
 
+// exit adicionado para que o codigo nao fique executando eternamente
 if ($method === 'GET' && preg_match('#^contatos/(\d+)/enderecos$#', $uri, $matches)) {
   $id = (int)$matches[1];
   $controller = new AdressController($pdo);
   $controller->getEnderecosPorContato($id);
+  exit;
 }
 
 if ($method === 'PUT' && preg_match('#^enderecos/(\d+)$#', $uri, $matches)) {
   $id = (int)$matches[1];
   $controller = new AdressController($pdo);
   $controller->atualizar($id);
+  exit;
 }
 
 if ($method === 'DELETE' && preg_match('#^enderecos/(\d+)$#', $uri, $matches)) {
   $id = (int)$matches[1];
   $controller = new AdressController($pdo);
   $controller->deletar($id);
+  exit;
 }
 
 if ($method === 'GET' && preg_match('#^telefones/contato/(\d+)$#', $uri, $matches)) {
   $id = (int)$matches[1];
   $controller = new PhoneController($pdo);
   $controller->getTelefonesPorContato($id);
+  exit;
 }
 
 if ($method === 'PUT' && preg_match('#^telefones/(\d+)$#', $uri, $matches)) {
   $id = (int)$matches[1];
   $controller = new PhoneController($pdo);
   $controller->atualizar($id);
+  exit;
 }
 
 if ($method === 'DELETE' && preg_match('#^contatos/(\d+)$#', $uri, $matches)) {
   $id = (int)$matches[1];
   $controller = new ContactController($pdo);
   $controller->deletar($id);
+  exit;
 }
 
 if ($method === 'PUT' && preg_match('#^contatos/(\d+)$#', $uri, $matches)) {
   $id = (int)$matches[1];
   $controller = new ContactController($pdo);
   $controller->atualizar($id);
+  exit;
 }
 
 
@@ -162,6 +176,7 @@ $routes = [
 // validacao das rotas
 if (isset($routes[$method][$uri])) {
   call_user_func($routes[$method][$uri]);
+  exit;
 } else {
   http_response_code(404);
   echo json_encode(['erro' => 'Rota não encontrada']);

@@ -31,7 +31,7 @@ class AdressController extends BaseController
       $endereco = $this->enderecoRepository->buscarUltimoPorContato($contatoId);
 
       if (!$endereco) {
-        $this->resposta(['erro' => 'Endereço não encontrado para o contato'], 404, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        $this->resposta([], 200, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
       }
 
       $this->resposta($endereco, 200, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
