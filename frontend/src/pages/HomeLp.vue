@@ -91,7 +91,9 @@
           </div>
           <ul class="step-items">
             <li>Selecione o contato</li>
-            <li>Telefone Comercial, Residencial e Celular</li>
+            <li>Telefone Comercial</li>
+            <li>Telefone Celular</li>
+            <li>Telefone Residencial</li>
             <li>Máscara automática: (42) 9 8888-7766</li>
             <li>Dados existentes são carregados para edição</li>
           </ul>

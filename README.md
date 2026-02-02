@@ -233,4 +233,4 @@ Algumas dúvidas de qual o melhor modo, sintaxe para determinada ação em PHP f
 
 ## Autor
 
-Gabriel Rodrigo Andrade
+Gabriel Rodrigo Andrade - Software Engineering Student
